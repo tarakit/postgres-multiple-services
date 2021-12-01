@@ -1,0 +1,78 @@
+version: '3.7'
+
+volumes:
+  sportdate_db:
+  kshrd_academy_db:
+  cms_db:
+  servenak_db:
+
+services:
+    sportdate:
+        container_name: 9th_sportdate
+        image: postgres:10.5
+        restart: always
+        environment:
+          - POSTGRES_USER=sportdate
+          - POSTGRES_PASSWORD=sportdate
+          - POSTGRES_DB=9th_sportdate
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5600:5432'
+        volumes: 
+          - sportdate_db:/var/lib/postgresql/data
+          # copy the sql script to create tables
+          # - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+    kshrd_academy:
+        container_name: 9th_kshrd_academy
+        image: postgres:10.5
+        restart: always
+        environment:
+          - POSTGRES_USER=kshrd_academy
+          - POSTGRES_PASSWORD=kshrd_academy
+          - POSTGRES_DB=9th_kshrd_academy
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5601:5432'
+        volumes: 
+          - kshrd_academy_db:/var/lib/postgresql/data
+
+    cms:
+        container_name: 9th_cms
+        image: postgres:10.5
+        restart: always
+        environment:
+          - POSTGRES_USER=cms
+          - POSTGRES_PASSWORD=cms
+          - POSTGRES_DB=9th_cms
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5602:5432'
+        volumes: 
+          - cms_db:/var/lib/postgresql/data
+
+    servenak:
+        container_name: 9th_servenak
+        image: postgres:10.5
+        restart: always
+        environment:
+          - POSTGRES_USER=servenak
+          - POSTGRES_PASSWORD=servenak
+          - POSTGRES_DB=9th_servenak
+        logging:
+          options:
+            max-size: 10m
+            max-file: "3"
+        ports:
+          - '5603:5432'
+        volumes: 
+          - servenak_db:/var/lib/postgresql/data
